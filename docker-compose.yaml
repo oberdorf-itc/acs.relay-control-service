@@ -1,0 +1,39 @@
+services:
+  relay-control-service:
+    restart: always
+    user: 2300:2300
+    image: oitc/acs.relay-control-service:latest
+    environment:
+      MQTT_SERVER: test.mosquitto.org
+      MQTT_PORT: 8883
+      MQTT_PROTOCOL_VERSION: 5
+      MQTT_TLS: true
+      MQTT_CACERT_FILE: /etc/ssl/certs/ca-certificates.crt
+      MQTT_TLS_INSECURE: false
+      MQTT_CLIENT_ID: c27c9da3-ac39-47f2-bf03-48753d1ab3e7
+      MQTT_USERNAME: acs.relay-control-service
+      #MQTT_PASSWORD: myMQTTPassword
+      MQTT_PASSWORD_FILE: /run/secrets/mqtt_password
+      MQTT_TOPIC_DOOR_ACCESS: location/oitc-acs/entrypoints/+/access
+      LDAP_SERVER: localhost
+      LDAP_PORT: 389
+      LDAP_TLS: false
+      LDAP_USERDN: cn=myLdapUser,ou=users,dc=example,dc=org
+      #LDAP_PASSWORD: myLDAPPassword
+      LDAP_PASSWORD_FILE: /run/secrets/ldap_password
+      LDAP_BASEDN: uid=ACS Relay Control Service,ou=Technical Accounts,dc=example,dc=org
+      LDAP_FILTER: "(objectClass=oitcACSAccessPointExtension)"
+      PROMETHEUS_LISTENER_ADDR: 0.0.0.0
+      PROMETHEUS_LISTENER_PORT: 8080
+      TZ: Europe/Berlin
+    ports:
+      - "8080:8080"
+    secrets:
+      - mqtt_password
+      - ldap_password
+
+secrets:
+  mqtt_password:
+    file: /srv/docker/acs.relay-control-service/secrets/mqtt_password
+  ldap_password:
+    file: /srv/docker/acs.relay-control-service/secrets/ldap_password
