@@ -55,7 +55,6 @@ The container get's the configuration from environment variables.
 | `MQTT_USERNAME`             | The MQTT username for MQTT authentication.                                                      | OPTIONAL      |                                             |
 | `MQTT_PASSWORD`             | The MQTT password for MQTT authentication.                                                      | OPTIONAL      |                                             |
 | `MQTT_PASSWORD_FILE`        | The filepath where the MQTT password is stored for MQTT authentication.                         | OPTIONAL      |                                             |
-| `MQTT_TOPIC_ACS_STATUS`     | The MQTT topic to subscribe that contains the status messages of the ACS.                       | **MANDATORY** |                                             |
 | `MQTT_TOPIC_DOOR_ACCESS`    | The MQTT topic to subscribe that contains the door access information.                          | **MANDATORY** |                                             |
 | `LDAP_SERVER`               | The LDAP server that has the relay configuration.                                               | OPTIONAL      | `localhost`                                 |
 | `LDAP_PORT`                 | The LDAP server TCP port.                                                                       | OPIONAL       | `389`                                       |
