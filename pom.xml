@@ -31,11 +31,6 @@
       <version>1.2.5</version>
     </dependency>
     <dependency>
-      <groupId>org.eclipse.paho</groupId>
-      <artifactId>org.eclipse.paho.mqttv5.client</artifactId>
-      <version>1.2.5</version>
-    </dependency>
-    <dependency>
 	    <groupId>net.java.dev.jna</groupId>
 	    <artifactId>jna</artifactId>
 	    <version>5.18.1</version>

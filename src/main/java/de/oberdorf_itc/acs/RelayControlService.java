@@ -1,11 +1,12 @@
 package de.oberdorf_itc.acs;
 
 // Import Java Libraries
+import de.oberdorf_itc.helpers.Manifest_helper;
+import de.oberdorf_itc.helpers.PropertiesFromEnvironment;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.List;
-import java.util.Arrays;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -23,7 +24,7 @@ import org.slf4j.LoggerFactory;
  */
 public class RelayControlService {
     private final static Logger logger = LoggerFactory.getLogger(de.oberdorf_itc.acs.RelayControlService.class);
-    private static Map<String, String> configuration = new HashMap<String, String>();
+    private static Map<String, Object> configuration = new HashMap<String, Object>();
 
     public static void main(String[] args) throws IOException, InterruptedException {
         // read value of Implementation-Version from META-INF/MANIFEST.MF of this class
@@ -31,58 +32,11 @@ public class RelayControlService {
         logger.info("OITC Access Control System: Relay Control Service v{} started", MF.getImplementationVersion());
         logger.info("(C) Copyright by Michael Oberdorf IT-Consulting 2015-2026, https://www.oberdorf-itc.de/)");
 
-        getPropertiesFromEnvironment();
+        // read environment variables and store them in the configuration map
+        PropertiesFromEnvironment.readEnvironment();
+        PropertiesFromEnvironment.readFiles();
+        configuration = PropertiesFromEnvironment.getConfiguration();
+        logger.debug("Configuration: {}", configuration);
     }
 
-
-
-
-    /**
-     * This method reads the configuration from environment variables and stores them in the configuration map. The list of known environment variables is defined in the method. If an environment variable is found, its value is stored in the configuration map after removing any surrounding quotes.
-     * @param None
-     * @return None
-     * @throws IOException if an I/O error occurs while reading environment variables
-     */
-    private static void getPropertiesFromEnvironment() {
-        logger.trace("Method: getPropertiesFromEnvironment()");
-
-        // The list of known environment variables
-        List<String> attributes = Arrays.asList(
-            // MQTT environment
-            "MQTT_SERVER",
-            "MQTT_PORT",
-            "MQTT_PROTOCOL_VERSION",
-            "MQTT_TLS",
-            "MQTT_CACERT_FILE",
-            "MQTT_TLS_INSECURE",
-            "MQTT_CLIENT_ID",
-            "MQTT_USERNAME",
-            "MQTT_PASSWORD",
-            "MQTT_PASSWORD_FILE",
-            "MQTT_TOPIC_DOOR_ACCESS",
-            // LDAP environment
-            "LDAP_SERVER",
-            "LDAP_PORT",
-            "LDAP_TLS",
-            "LDAP_USERDN",
-            "LDAP_PASSWORD",
-            "LDAP_PASSWORD_FILE",
-            "LDAP_BASEDN",
-            "LDAP_FILTER",
-            // Prometheus configuration
-            "PROMETHEUS_LISTENER_ADDR",
-            "PROMETHEUS_LISTENER_PORT",
-            // Timezone configuration
-            "TZ"
-        );
-
-        for (String attribute : attributes) {
-            logger.trace("Try to get environment variable {}", attribute);
-            String value = System.getenv(attribute);
-            if (value != null) {
-                logger.trace("Store environment variable {}={}", attribute, value);
-                configuration.put(attribute, value.replaceAll("^\"|\"$", ""));
-            }
-        }
-    }
 }

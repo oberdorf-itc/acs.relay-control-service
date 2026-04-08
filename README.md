@@ -63,7 +63,7 @@ The container get's the configuration from environment variables.
 | `LDAP_PASSWORD`             | The LDAP password for LDAP authentication.                                                      | OPTIONAL      |                                             |
 | `LDAP_PASSWORD_FILE`        | The filepath where the LDAP password is stored for LDAP authentication.                         | OPTIONAL      |                                             |
 | `LDAP_BASEDN`               | The search base DN where the relay configuration can be found.                                  | **MANDATORY** |                                             |
-| `LDAP_FILTER`               | The LDAP filter to search for the relay configuration.                                          | OPTIONAL      | `(objectclass=oitcACSAccessPointExtension)` |
+| `LDAP_FILTER`               | The LDAP filter to search for the relay configuration.                                          | OPTIONAL      | `(&(objectclass=ipHost)(objectclass=oitcACSAccessPointExtension)(ipHostNumber={entrypoint_ip}))` |
 | `PROMETHEUS_LISTENER_ADDR`  | The listener address to expose the prometheus exporter.                                         | OPTIONAL      | `0.0.0.0`                            |
 | `PROMETHEUS_LISTENER_PORT`  | The TCP listener port to expose the prometheus exporter.                                        | OPTIONAL      | `8080`                               |
 | `TZ`                        | Timezone                                                                                        | OPTIONAL      | `UTC`                                |

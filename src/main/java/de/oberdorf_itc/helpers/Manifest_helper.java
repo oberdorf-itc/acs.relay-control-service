@@ -1,4 +1,4 @@
-package de.oberdorf_itc.acs;
+package de.oberdorf_itc.helpers;
 
 /**
  * Class Manifest_helper - to parse Data from local MANIFEST.MF<br>
