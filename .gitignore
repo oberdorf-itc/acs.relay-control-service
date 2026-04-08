@@ -1,6 +1,6 @@
 .envrc
 .secrets
-
+.vscode
 
 # Created by https://www.gitignore.io/api/osx,java,linux,eclipse,windows,netbeans,java-web,intellij
 
