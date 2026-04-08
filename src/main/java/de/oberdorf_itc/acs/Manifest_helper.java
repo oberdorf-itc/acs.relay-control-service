@@ -2,7 +2,7 @@ package de.oberdorf_itc.acs;
 
 /**
  * Class Manifest_helper - to parse Data from local MANIFEST.MF<br>
- * Copyright by Michael Oberdorf IT-Consulting 2015,<br>
+ * Copyright by Michael Oberdorf IT-Consulting 2015-2026,<br>
  * Date: 2015-09-18
  * @author Michael Oberdorf
  * @version 1.0.0
