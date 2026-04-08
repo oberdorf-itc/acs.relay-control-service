@@ -32,20 +32,13 @@
     </dependency>
     <dependency>
       <groupId>org.eclipse.paho</groupId>
-      <artifactId>org.eclipse.paho.client.mqttv5</artifactId>
+      <artifactId>org.eclipse.paho.mqttv5.client</artifactId>
       <version>1.2.5</version>
     </dependency>
-    <!-- Dependent Libraries to communicate with hardware relays -->
-    <!--  https://github.com/nyholku/purejavahidapi -->
     <dependency>
-      <groupId>purejavahidapi</groupId>
-      <artifactId>purejavahidapi</artifactId>
-      <version>0.0.10</version>
-    </dependency>
-    <dependency>
-	  <groupId>net.java.dev.jna</groupId>
-	  <artifactId>jna</artifactId>
-	  <version>5.18.1</version>
+	    <groupId>net.java.dev.jna</groupId>
+	    <artifactId>jna</artifactId>
+	    <version>5.18.1</version>
 	</dependency>
     <!-- JUnit Tests -->
     <dependency>
