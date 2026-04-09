@@ -47,7 +47,6 @@ The container get's the configuration from environment variables.
 |-----------------------------|-------------------------------------------------------------------------------------------------|---------------|---------------------------------------------|
 | `MQTT_SERVER`               | The MQTT server hostname or IP address.                                                         | OPTIONAL      | `localhost`                                 |
 | `MQTT_PORT`                 | The TCP port of the MQTT server.                                                                | OPTIONAL      | `1883`                                      |
-| `MQTT_PROTOCOL_VERSION`     | The MQTT protocol version to use. Currently supported `3` (means 3.1.1) and `5`.                | OPTIONAL      | `3`                                         |
 | `MQTT_TLS`                  | Should SSL communication be enabled (`true`) or not (`false`).                                  | OPTIONAL      | `false`                                     |
 | `MQTT_CACERT_FILE`          | If TLS is enabled, the path to the CA certificate file to validate the MQTT server certificate. | OPTIONAL      | `/etc/ssl/certs/ca-certificates.crt`        |
 | `MQTT_TLS_INSECURE`         | If TLS is enabled, skip the hostname validation of the TLS certificate.                         | OPTIONAL      | `false`                                     |
