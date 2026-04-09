@@ -1,4 +1,4 @@
-FROM maven:3.9-eclipse-temurin-21 AS builder
+FROM maven:3-eclipse-temurin-25-alpine AS builder
 WORKDIR /app
 COPY pom.xml .
 # Dependencies cachen (Layer-Optimierung)
@@ -37,7 +37,7 @@ RUN apk upgrade --available --no-cache --update \
     && mkdir -p /app/etc /app/lib
 
 COPY --chown=root:root docker-entrypoint.sh /docker-entrypoint.sh
-COPY --chown=root:root src/resources/* /app/etc/.
+COPY --chown=root:root src/main/resources/* /app/etc/.
 COPY --from=builder /app/target/*.jar /app/app.jar
 
 USER javauser:javauser
