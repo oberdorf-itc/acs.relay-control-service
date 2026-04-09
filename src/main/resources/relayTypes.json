@@ -12,8 +12,8 @@
         "url": "https://denkovi.com/usb-relay-board-four-channels-for-home-automation-v2",
         "type": "Locally USB connected relay board",
         "defaults": {
-            "relayNo": 0,
-            "triggerTime": 500
+            "relayNumber": 1,
+            "relayTriggerTime": 500
         }
     }
 }
