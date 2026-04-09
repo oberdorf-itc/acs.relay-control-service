@@ -57,6 +57,11 @@
       <artifactId>gson</artifactId>
       <version>2.13.2</version>
     </dependency>
+    <dependency>
+      <groupId>org.json</groupId>
+      <artifactId>json</artifactId>
+      <version>20251224</version>
+    </dependency>
     <!-- LDAP handling -->
     <dependency>
       <groupId>com.unboundid</groupId>
