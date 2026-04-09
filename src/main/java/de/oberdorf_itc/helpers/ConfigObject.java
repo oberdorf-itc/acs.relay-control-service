@@ -6,7 +6,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Class ConfigObject represents a configuration object with an attribute, type, and default value.
  * Copyright by Michael Oberdorf IT-Consulting 2015-2026<br>
- * Date: 2016-04-08
+ * Date: 2026-04-08
  * @author Michael Oberdorf
  * @version 1.0.0
  * @see "https://www.oberdorf-itc.de/"

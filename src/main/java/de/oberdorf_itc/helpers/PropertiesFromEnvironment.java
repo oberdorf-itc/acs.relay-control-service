@@ -61,7 +61,7 @@ public class PropertiesFromEnvironment {
                 logger.trace("Environment variable {} not found, use the default value {}", configObject.getAttribute(), configObject.getDefaultValue());
                 value = configObject.getDefaultValue();
             } else if (value == null && configObject.getDefaultValue() == null) {
-                logger.warn("Environment variable {} not found and no default value defined", configObject.getAttribute());
+                logger.debug("Environment variable {} not found and no default value defined", configObject.getAttribute());
                 continue;
             }
             logger.trace("Store environment variable {}={} as {}", configObject.getAttribute(), value, configObject.getType());

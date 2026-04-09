@@ -14,6 +14,9 @@ public class Manifest_helper {
 	 * @return String (value of Implementation-Vendor-Id)
 	 */
 	public String getImplementationVendorId() {
+		if (getClass().getPackage().getName() == null) {
+			return "unknown";
+		}
 		return getClass().getPackage().getName();
     }
 
@@ -22,6 +25,9 @@ public class Manifest_helper {
 	 * @return String (value of Implementation-Title)
 	 */
 	public String getImplementationTitle() {
+		if (getClass().getPackage().getImplementationTitle() == null) {
+			return "unknown";
+		}
 		return getClass().getPackage().getImplementationTitle();
     }
 
@@ -30,6 +36,9 @@ public class Manifest_helper {
 	 * @return String (value of Implementation-Version)
 	 */
 	public String getImplementationVersion() {
+		if (getClass().getPackage().getImplementationVersion() == null) {
+			return "unknown";
+		}
 		return getClass().getPackage().getImplementationVersion();
     }
 }
