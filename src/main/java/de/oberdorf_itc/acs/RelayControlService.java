@@ -1,7 +1,6 @@
 package de.oberdorf_itc.acs;
 
 // Import Java Libraries
-import de.oberdorf_itc.acs.TriggerRelay;
 import de.oberdorf_itc.helpers.Manifest_helper;
 import de.oberdorf_itc.helpers.PropertiesFromEnvironment;
 import de.oberdorf_itc.helpers.AccessObject;
@@ -247,17 +246,10 @@ public class RelayControlService {
                 logger.info("Access granted for entry point {}. Trigger the relay to unlock the door.", accessObject.getEntrypoint_ip());
                 metrics.get("acs_access_granted").labelValues(accessObject.getEntrypoint_ip()).inc();
 
-
-
-                // TODO: add a new thread to get the relay configuration from LDAP related to entrypoint_ip, after that trigger the relay to open the door
-                TriggerRelay triggerRelay;
-                try {
-                    triggerRelay = new TriggerRelay(accessObject.getEntrypoint_ip(), configuration, metrics.get("acs_relays_triggered"));
-
-
-                } catch (Exception e) {
-                    logger.error("Error triggering relay for entry point {}: {}", accessObject.getEntrypoint_ip(), e.getMessage());
-                }
+                // add a new thread to get the relay configuration from LDAP related to entrypoint_ip, after that trigger the relay to open the door
+                TriggerRelay triggerRelay = new TriggerRelay(accessObject.getEntrypoint_ip(), configuration, metrics.get("acs_relays_triggered"));
+                Thread thread = new Thread(triggerRelay);
+                thread.start();
             }
             public void connectionLost(Throwable cause) {
                 logger.error("connectionLost: " + cause.getMessage());
