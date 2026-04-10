@@ -39,7 +39,7 @@ jobs:
           echo "Loop over .tool-versions and install asdf plugins"
           for plugin in $(awk '{print $1}' < .tool-versions | egrep -v ^#)
           do
-            echo "asdf plugin add "${plugin}"
+            echo "asdf plugin add ${plugin}"
             asdf plugin add "${plugin}"
           done
           asdf install
