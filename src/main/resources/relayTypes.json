@@ -1,0 +1,19 @@
+{
+    "00": {
+        "vendor": "Michael Oberdorf IT-Consulting",
+        "product": "Relay Dummy",
+        "url": "https://www.oberdorf-itc.de/",
+        "type": "Dummy relay, without a function",
+        "defaults": null
+    },
+    "01": {
+        "vendor": "Denkovi Assembly Electronics LTD",
+        "product": "USB Relay Module 4 Channels, for Home Automation - v2",
+        "url": "https://denkovi.com/usb-relay-board-four-channels-for-home-automation-v2",
+        "type": "Locally USB connected relay board",
+        "defaults": {
+            "relayNumber": 1,
+            "relayTriggerTime": 500
+        }
+    }
+}

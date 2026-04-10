@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE xml>
+<Configuration monitorInterval="30" status="warn">
+  <Properties>
+    <Property name="logPath">logs</Property>
+  </Properties>
+
+  <Appenders>
+    <Console name="Console" target="SYSTEM_OUT">
+      <PatternLayout pattern="%d{YYYY-MM-dd HH:mm:ss.SSS} %-5level %logger{36} - %msg%n"/>
+    </Console>
+  </Appenders>
+
+  <Loggers>
+    <Root level="trace">
+      <AppenderRef ref="Console" level="info" />
+    </Root>
+  </Loggers>
+</Configuration>
