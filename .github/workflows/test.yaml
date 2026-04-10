@@ -15,6 +15,7 @@ jobs:
       - uses: actions/checkout@v4
       - name: Install asdf and necessary plugins
         run: |
+          # actionlint-disable SC2013
           wget "https://github.com/asdf-vm/asdf/releases/download/v${asdfVersion}/asdf-v${asdfVersion}-linux-amd64.tar.gz"
           RC=$?
           if [ ${RC} -gt 0 ]; then
@@ -37,7 +38,6 @@ jobs:
           export PATH="${HOME}/.asdf/shims:$PATH"
 
           echo "Loop over .tool-versions and install asdf plugins"
-          # actionlint-disable SC2013
           for plugin in $(awk '{print $1}' < .tool-versions | grep -Ev ^#)
           do
             echo "asdf plugin add ${plugin}"
@@ -46,4 +46,5 @@ jobs:
           asdf install
       - name: mvn test
         run: |
+          mvn dependency:go-offline -B
           mvn test -B
