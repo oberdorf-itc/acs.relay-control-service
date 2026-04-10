@@ -34,7 +34,7 @@ jobs:
           rm "asdf-v${asdfVersion}-linux-amd64.tar.gz"
           sudo mv asdf /usr/local/bin
 
-          export PATH="${HOME}/.asdf/shims:$PATH"
+          export PATH="${HOME}/.asdf/shims:${PATH}"
 
           echo "Loop over .tool-versions and install asdf plugins"
           while IFS= read -r plugin; do
@@ -44,5 +44,6 @@ jobs:
           asdf install
       - name: mvn test
         run: |
-          mvn dependency:go-offline -B
+          export PATH="${HOME}/.asdf/shims:${PATH}"
+          asdf install
           mvn test -B
