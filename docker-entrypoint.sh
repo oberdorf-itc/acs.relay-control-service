@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 #############################################################################
 # Michael Oberdorf IT-Consulting - ACS Relay Control Service
 #----------------------------------------------------------------------------
@@ -29,14 +29,14 @@ ulimit -c unlimited
 for jarFile in `find ${LIB_DIR} -type f -name "*.jar" | sort`
 do
   if [ -z "${class_path}" ]; then
-    class_path="${jarFile}"
+    class_path="-classpath ${jarFile}"
   else
     class_path="${class_path}:${jarFile}"
   fi
 done
 
 # combine java options
-JAVA_OPTS="--enable-native-access=ALL-UNNAMED -Xms128m -Xmx512m -verbose:gc -Dfile.encoding=${file_encoding} -Dlog4j.configurationFile=${log4jConf} -classpath ${class_path}"
+JAVA_OPTS="--enable-native-access=ALL-UNNAMED -Xms128m -Xmx512m -verbose:gc -Dfile.encoding=${file_encoding} -Dlog4j.configurationFile=${log4jConf} -Djava.io.tmpdir=/tmp ${class_path}"
 #JAVA_OPTS="${JAVA_OPTS} -XX:+PrintGCDetails -XX:+PrintGCDateStamps -Xloggc:${gc_log}"
 
 #############################################################################

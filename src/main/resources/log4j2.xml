@@ -13,7 +13,7 @@
 
   <Loggers>
     <Root level="trace">
-      <AppenderRef ref="Console" level="debug" />
+      <AppenderRef ref="Console" level="info" />
     </Root>
   </Loggers>
 </Configuration>

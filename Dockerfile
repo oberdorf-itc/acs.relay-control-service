@@ -30,6 +30,7 @@ RUN apk upgrade --available --no-cache --update \
     && apk add --no-cache --update \
        ca-certificates=20251003-r0 \
        curl=8.17.0-r1 \
+       eudev-libs=3.2.14-r6 \
        openjdk25-jre-headless=25.0.2_p10-r1 \
     && addgroup -g 2300 -S javauser \
     && adduser -u 2300 -S javauser -G javauser \
@@ -38,12 +39,14 @@ RUN apk upgrade --available --no-cache --update \
 
 COPY --chown=root:root docker-entrypoint.sh /docker-entrypoint.sh
 COPY --chown=root:root src/main/resources/* /app/etc/.
-COPY --from=builder /app/target/*.jar /app/app.jar
+COPY --from=builder /app/target/relay-control-service-*.jar /app/lib/.
+COPY --from=builder /app/target/dependency/*.jar /app/lib/.
 
+WORKDIR /app
 USER javauser:javauser
 EXPOSE ${PROMETHEUS_LISTENER_PORT}
 HEALTHCHECK --interval=1m --timeout=5s --retries=30 --start-period=5m \
             CMD curl -skSL http://localhost:${PROMETHEUS_LISTENER_PORT}/ -o /dev/null || exit 1
 
 # Start Server
-CMD ["docker-entrypoint.sh"]
+ENTRYPOINT ["/docker-entrypoint.sh"]

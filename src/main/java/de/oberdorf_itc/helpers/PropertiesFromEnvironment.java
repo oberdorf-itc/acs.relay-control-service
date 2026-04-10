@@ -43,6 +43,7 @@ public class PropertiesFromEnvironment {
         configObjects.add(new ConfigObject("PROMETHEUS_LISTENER_PORT", "int", "8080"));
         // Timezone configuration
         configObjects.add(new ConfigObject("TZ", "string", "UTC"));
+        configObjects.add(new ConfigObject("java.io.tmpdir", "string", "/tmp"));
     }
 
     /**

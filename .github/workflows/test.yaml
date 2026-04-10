@@ -9,28 +9,40 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        python-version: ["3.12", "3.13"]
-
+    env:
+      asdfVersion: 0.18.1
     steps:
       - uses: actions/checkout@v4
-      - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v5
-        with:
-          python-version: ${{ matrix.python-version }}
-      - name: Install dependencies
+      - name: Install asdf and necessary plugins
         run: |
-          python -m pip install --upgrade pip
-          pip install -r tests/requirements.txt
-          pip install -r src/requirements.txt
-      - name: Lint with ruff
+          wget https://github.com/asdf-vm/asdf/releases/download/v${asdfVersion}/asdf-v${asdfVersion}-linux-amd64.tar.gz
+          RC=$?
+          if [ ${RC} -gt 0 ]; then
+            echo "Download of asdf failed" >&2
+            exit 1
+          fi
+          if [ ! -f "./asdf-v${asdfVersion}-linux-amd64.tar.gz" ]; then
+            echo "File not found exception for: ./asdf-v${asdfVersion}-linux-amd64.tar.gz" >&2
+            exit 1
+          fi
+          tar xvzf asdf-v${asdfVersion}-linux-amd64.tar.gz
+          RC=$?
+          if [ ${RC} -gt 0 ]; then
+            echo "File extraction of ./asdf-v${asdfVersion}-linux-amd64.tar.gz failed with RC ${RC}!" >&2
+            exit 1
+          fi
+          rm asdf-v${asdfVersion}-linux-amd64.tar.gz
+          sudo mv asdf /usr/local/bin
+
+          export PATH="${HOME}/.asdf/shims:$PATH"
+
+          echo "Loop over .tool-versions and install asdf plugins"
+          for plugin in `cat .tool-versions | awk '{print $1}'`
+          do
+            echo "asdf plugin add ${plugin}"
+            asdf plugin add ${plugin}
+          done
+          asdf install
+      - name: mvn test
         run: |
-          ruff_target=py$(echo "${{ matrix.python-version }}" | tr -d '.')
-          # stop the build if there are Python syntax errors or undefined names
-          ruff check --select=E9,F63,F7,F82 --target-version="${ruff_target}" .
-          # default set of ruff rules with GitHub Annotations
-          ruff check --target-version="${ruff_target}" .
-      - name: Test with pytest
-        run: |
-          pytest
+          mvn test -B

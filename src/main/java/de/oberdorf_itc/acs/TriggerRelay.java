@@ -64,8 +64,11 @@ public class TriggerRelay implements Runnable {
 
         // get the file path of the relayTypes.json file and load it into JSONObject
         try {
-            URL rtURI = de.oberdorf_itc.acs.TriggerRelay.class.getResource("/relayTypes.json");
-            Path rtPath = Path.of(new File(rtURI.toURI()).getAbsolutePath());
+            URL rtURI = de.oberdorf_itc.acs.TriggerRelay.class.getResource("relayTypes.json");
+            Path rtPath = Path.of("/app", "etc", "relayTypes.json");
+            if (rtURI != null) {
+                rtPath = Path.of(new File(rtURI.toURI()).getAbsolutePath());
+            }
             String rtContent = Files.readString(rtPath, Charset.defaultCharset());
             this.relayTypes = new JSONObject(rtContent);
         } catch (URISyntaxException e) {
@@ -103,7 +106,7 @@ public class TriggerRelay implements Runnable {
         getRelayConfiguration();
         closeLdapConnection();
 
-        logger.debug("Trigger relay of type {} with config {}", bytesToHex(this.relayType), this.relayConfig);
+        logger.debug("Relay configuration is relayType: {}, relayConfig {}", bytesToHex(this.relayType), this.relayConfig);
         // get additional configuration from relayTypes configuration
         JSONObject relayInformation = this.relayTypes.optJSONObject(bytesToHex(this.relayType));
         String relayVendor = null;

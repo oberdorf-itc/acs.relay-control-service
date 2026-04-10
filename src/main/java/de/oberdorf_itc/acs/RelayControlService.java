@@ -34,6 +34,7 @@ import org.eclipse.paho.client.mqttv3.MqttClient;
 import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
+import org.eclipse.paho.client.mqttv3.persist.MqttDefaultFilePersistence;
 import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
 import org.eclipse.paho.client.mqttv3.MqttCallback;
 import org.slf4j.Logger;
@@ -210,9 +211,21 @@ public class RelayControlService {
             logger.debug("MQTT Username: not set");
         }
 
+        // Specify directory for storing messages
+        logger.debug("Define MQTT persistence directory to: {}", configuration.get("java.io.tmpdir"));
+        MqttDefaultFilePersistence persistence = new MqttDefaultFilePersistence((String) configuration.get("java.io.tmpdir"));
+
         @SuppressWarnings("resource")
-        MqttClient mqttClient = new MqttClient(mqttBroker, mqttClientId);
-        mqttClient.connect(connOpts);
+        MqttClient mqttClient = new MqttClient(mqttBroker, mqttClientId, persistence);
+        try {
+            mqttClient.connect(connOpts);
+        } catch (MqttException mqttException) {
+            logger.error("Error connecting to MQTT server: {}", mqttException.getMessage());
+            mqttException.printStackTrace();
+            System.exit(1);
+        }
+        logger.debug("Successfully connected to MQTT server.");
+        logger.debug("Register MQTT callbacks.");
 
         mqttClient.setCallback(new MqttCallback() {
             public void messageArrived(String topic, MqttMessage message) throws Exception {
