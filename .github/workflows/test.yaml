@@ -14,7 +14,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Install asdf and necessary plugins
-        # actionlint-disable SC2013
         run: |
           wget "https://github.com/asdf-vm/asdf/releases/download/v${asdfVersion}/asdf-v${asdfVersion}-linux-amd64.tar.gz"
           RC=$?
@@ -38,6 +37,7 @@ jobs:
           export PATH="${HOME}/.asdf/shims:$PATH"
 
           echo "Loop over .tool-versions and install asdf plugins"
+          # shellcheck disable=SC2013
           for plugin in $(awk '{print $1}' < .tool-versions | grep -Ev ^#)
           do
             echo "asdf plugin add ${plugin}"
