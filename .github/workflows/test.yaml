@@ -37,7 +37,8 @@ jobs:
           export PATH="${HOME}/.asdf/shims:$PATH"
 
           echo "Loop over .tool-versions and install asdf plugins"
-          for plugin in $(awk '{print $1}' < .tool-versions | egrep -v ^#)
+          # actionlint-disable SC2013
+          for plugin in $(awk '{print $1}' < .tool-versions | grep -Ev ^#)
           do
             echo "asdf plugin add ${plugin}"
             asdf plugin add "${plugin}"
