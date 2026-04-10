@@ -14,8 +14,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Install asdf and necessary plugins
+        # actionlint-disable SC2013
         run: |
-          # actionlint-disable SC2013
           wget "https://github.com/asdf-vm/asdf/releases/download/v${asdfVersion}/asdf-v${asdfVersion}-linux-amd64.tar.gz"
           RC=$?
           if [ ${RC} -gt 0 ]; then
