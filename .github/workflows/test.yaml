@@ -15,7 +15,7 @@ jobs:
       - uses: actions/checkout@v4
       - name: Install asdf and necessary plugins
         run: |
-          wget https://github.com/asdf-vm/asdf/releases/download/v${asdfVersion}/asdf-v${asdfVersion}-linux-amd64.tar.gz
+          wget "https://github.com/asdf-vm/asdf/releases/download/v${asdfVersion}/asdf-v${asdfVersion}-linux-amd64.tar.gz"
           RC=$?
           if [ ${RC} -gt 0 ]; then
             echo "Download of asdf failed" >&2
@@ -25,22 +25,22 @@ jobs:
             echo "File not found exception for: ./asdf-v${asdfVersion}-linux-amd64.tar.gz" >&2
             exit 1
           fi
-          tar xvzf asdf-v${asdfVersion}-linux-amd64.tar.gz
+          tar xvzf "asdf-v${asdfVersion}-linux-amd64.tar.gz"
           RC=$?
           if [ ${RC} -gt 0 ]; then
             echo "File extraction of ./asdf-v${asdfVersion}-linux-amd64.tar.gz failed with RC ${RC}!" >&2
             exit 1
           fi
-          rm asdf-v${asdfVersion}-linux-amd64.tar.gz
+          rm "asdf-v${asdfVersion}-linux-amd64.tar.gz"
           sudo mv asdf /usr/local/bin
 
           export PATH="${HOME}/.asdf/shims:$PATH"
 
           echo "Loop over .tool-versions and install asdf plugins"
-          for plugin in `cat .tool-versions | awk '{print $1}'`
+          for plugin in $(awk '{print $1}' < .tool-versions | egrep -v ^#)
           do
-            echo "asdf plugin add ${plugin}"
-            asdf plugin add ${plugin}
+            echo "asdf plugin add "${plugin}"
+            asdf plugin add "${plugin}"
           done
           asdf install
       - name: mvn test

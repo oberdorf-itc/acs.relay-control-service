@@ -96,6 +96,18 @@ A bigger example can be found here: [`docker-compose.yaml`](./docker-compose.yam
 
 Please have a look to the main documentation: [MQTT message reference](https://github.com/oberdorf-itc/acs.documentation/blob/main/docs/mqtt-message-reference.md)
 
+## Local Relay Board integration
+
+This tool currently support only the MCP2200 chip based USB Relay Board [USB Relay Module 4 Channels, for Home Automation - v2](https://denkovi.com/usb-relay-board-four-channels-for-home-automation-v2) from [Denkovi Assembly Electronics LTD](https://denkovi.com/).
+
+**Further relay type implementations are under development.**
+
+To run the container service in a secure way you:
+
+1. need to allow writes in the container to allow a write to the udev device (`read_only: false`)
+2. The udev system needs to be configured for the relay to allow writes from non root. See the udev rule example: [53-mcp2200.rules](https://github.com/oberdorf-itc/acs.relay-control-service/blob/main/mcp2200/53-mcp2200.rules)
+3. When using Linux Kernel 6.8, you need to disable the kernel module `hid_mcp2200`. See the modprobe blacklist example: [blacklist_mcp2200.conf](https://github.com/oberdorf-itc/acs.relay-control-service/blob/main/mcp2200/blacklist_mcp2200.conf)
+
 ## Donate
 
 I would appreciate a small donation to support the further development of my open source projects.
