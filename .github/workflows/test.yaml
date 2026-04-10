@@ -37,12 +37,10 @@ jobs:
           export PATH="${HOME}/.asdf/shims:$PATH"
 
           echo "Loop over .tool-versions and install asdf plugins"
-          # shellcheck disable=SC2013
-          for plugin in $(awk '{print $1}' < .tool-versions | grep -Ev ^#)
-          do
+          while IFS= read -r plugin; do
             echo "asdf plugin add ${plugin}"
             asdf plugin add "${plugin}"
-          done
+          done < <(awk '{print $1}' .tool-versions | grep -Ev '^#')
           asdf install
       - name: mvn test
         run: |
